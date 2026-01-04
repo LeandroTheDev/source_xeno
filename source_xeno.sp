@@ -107,7 +107,9 @@ public void OnClientConnected(int client)
 {
     char ip[64];
     GetClientIP(client, ip, sizeof(ip));
-    ExecuteXenophobia(client, ip);
+
+    if (!StrEqual(ip, "127.0.0.1"))
+        ExecuteXenophobia(client, ip);
 }
 
 // True if kicked, false otherwises
