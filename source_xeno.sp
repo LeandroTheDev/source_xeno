@@ -187,24 +187,44 @@ public bool ExecuteManualXenophobia(int client, const char[] ip, const char[] va
 
 stock bool IsCountryBlocked(const char[] country)
 {
+    // If there are no blocked countries, never block
+    if (g_BlockCountryCount <= 0)
+        return false;
+
+    // If the client's country is empty (bot / GeoIP failed), ignore
+    if (country[0] == '\0')
+        return false;
+
     for (int i = 0; i < g_BlockCountryCount; i++)
     {
+        // Never compare empty entries
+        if (g_BlockCountries[i][0] == '\0')
+            continue;
+
         if (StrEqual(country, g_BlockCountries[i], false))
-        {
             return true;
-        }
     }
     return false;
 }
 
 stock bool IsCityBlocked(const char[] city)
 {
+    // If there are no blocked cities, never block
+    if (g_BlockCityCount <= 0)
+        return false;
+
+    // If the client's city is empty (bot / GeoIP failed), ignore
+    if (city[0] == '\0')
+        return false;
+
     for (int i = 0; i < g_BlockCityCount; i++)
     {
+        // Never compare empty entries
+        if (g_BlockCities[i][0] == '\0')
+            continue;
+
         if (StrEqual(city, g_BlockCities[i], false))
-        {
             return true;
-        }
     }
     return false;
 }
